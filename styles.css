@@ -1,0 +1,45 @@
+/*Remember to apply auto-prefixer*/
+
+* {
+  box-sizing: border-box;
+}
+
+.container {
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.chatbox {
+  width: 300px;
+  height: 200px;
+  margin: 20px;
+  border: 1px dotted #999;
+  box-shadow: 1px 1px 1px #999;
+  position: relative;
+}
+.chat {
+  overflow-y: scroll;
+  height: 100%;
+  background: #ececec;
+}
+.chatbox .chat-input {
+  /*outline: none;*/
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+}
+
+.sent {
+  background: rgba(139, 195, 75, 0.29);
+  float: right;
+}
+
+.recieved {
+  background: #fff88a;
+  clear: both;
+}
+.msg {
+  border-radius: 10%;
+  width: 150px;
+  margin: 5px;
+}
