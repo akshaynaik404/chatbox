@@ -22,21 +22,25 @@
   height: 100%;
   background: #ececec;
 }
-.chatbox .chat-input {
+.chatbox .input-container {
   /*outline: none;*/
   position: absolute;
   bottom: 0;
   width: 100%;
 }
 
+.chatbox .chat-input {
+  width: calc(100% - 70px);
+}
+
 .sent {
   background: rgba(139, 195, 75, 0.29);
-  float: right;
+  clear: both;
 }
 
 .recieved {
   background: #fff88a;
-  clear: both;
+  float: right;
 }
 .msg {
   border-radius: 10%;

@@ -11,23 +11,27 @@ $(function () {
       <div class="chatbox chatbox-${username}">
         <div class="chat">
         </div>
-        <input type="text" class="chat-input" id="${username}"/>
+        <div class="input-container">
+          <input type="text" class="chat-input" id="${username}"/>
+          <button class="send">Send</button>
+        </div>
       </div>`;
 
     $('.container').append(chatboxHTMLStr);
   })
 
   function sendMessage(user, msg) {
-    var msgObj = {};
-    msgObj[user] = msg;
+    // var msgObj = {};
+    // msgObj[user] = msg;
     // chatroom.push(msgObj);
     for (let i = 0; i < numberOfUsers; i++) {
+      // console.log(user, `user${i}`);
       if(user === `user${i}`) {
         $('.chatbox-user' + i).find(".chat").append(`<div class="sent msg">${msg}</div>`);
       } else {
         $('.chatbox-user' + i).find(".chat").append(`<div class="recieved msg">${user}: ${msg}</div>`);
       }
-      console.log('sendMessage');
+      // console.log('sendMessage');
     }
 
   }
@@ -37,8 +41,16 @@ $(function () {
       var user = this.getAttribute('id');
       var msg = this.value;
       this.value = '';
-      // console.log(user, msg);
       sendMessage(user, msg)
     }
+  });
+
+  $("body").on("click", "button.send", function(event){
+    var focusedInput = $(this).siblings('input');
+    var msg = focusedInput.val();
+    var user = focusedInput.attr('id');
+    focusedInput.val('');
+    // console.log(user, msg);
+    sendMessage(user, msg)
   });
 });
