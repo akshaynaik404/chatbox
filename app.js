@@ -9,16 +9,19 @@ window.onload = function () {
     numberOfUsers++;
 
     let chatboxHTMLStr = `
-      <div class="chatbox chatbox-${username}">
-        <div class="chat">
-        </div>
-        <div class="input-container">
-          <input type="text" class="chat-input" id="${username}"/>
-          <button class="send">Send</button>
-        </div>
+      <div class="chat">
+      </div>
+      <div class="input-container">
+        <input type="text" class="chat-input" id="${username}"/>
+        <button class="send">Send</button>
       </div>`;
-
-    $('.container').append(chatboxHTMLStr);
+    // <div class="chatbox chatbox-${username}">
+    // </div>
+    let $chatbox = document.createElement('div');
+    $chatbox.classList.add('chatbox', `chatbox-${username}`);
+    $chatbox.innerHTML = chatboxHTMLStr;
+    document.querySelector('.container').appendChild($chatbox);
+    // $('.container').append($chatbox);
   })
 
   function sendMessage(user, msg) {
@@ -31,15 +34,13 @@ window.onload = function () {
         let $chatBox = document.querySelector(`.chatbox-user${i} > .chat`);
         let $sentMsgEle = document.createElement(`div`);
         $sentMsgEle.innerHTML = msg;
-        $sentMsgEle.classList.add('sent');
-        $sentMsgEle.classList.add('msg');
+        $sentMsgEle.classList.add('sent', 'msg');
         $chatBox.appendChild($sentMsgEle);
       } else {
         let $chatBox = document.querySelector(`.chatbox-user${i} > .chat`);
         let $sentMsgEle = document.createElement(`div`);
         $sentMsgEle.innerHTML = `${user}: ${msg}`;
-        $sentMsgEle.classList.add('recieved');
-        $sentMsgEle.classList.add('msg');
+        $sentMsgEle.classList.add('recieved', 'msg');
         $chatBox.appendChild($sentMsgEle);
         // $('.chatbox-user' + i).find(".chat").append(`<div class="recieved msg">${user}: ${msg}</div>`);
       }
