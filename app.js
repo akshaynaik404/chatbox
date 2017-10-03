@@ -48,22 +48,42 @@ window.onload = function () {
     }
 
   }
-  // Event delegation is better with jQuery - Change to Vanilla JS at a later point
-  $("body").on("keyup", "input.chat-input", function(event){
-    if(event.keyCode == 13){
-      var user = this.getAttribute('id');
-      var msg = this.value;
-      this.value = '';
+
+  // Checks whether an event has occurred inside input.chat-input
+  function isEvtInsideInput(evt) {
+    return (
+      evt.target
+      && evt.target.nodeName === 'INPUT'
+      && evt.target.classList.contains('chat-input')
+    );
+  }
+
+  // Add event listener for enter keypress inside input.chat-input
+  let $body = document.querySelector('body');
+  $body.addEventListener('keyup', function (evt) {
+    if(isEvtInsideInput(evt) && evt.keyCode === 13) {
+      var user = evt.target.getAttribute('id');
+      var msg = evt.target.value;
+      evt.target.value = '';
       sendMessage(user, msg)
     }
   });
 
-  $("body").on("click", "button.send", function(event){
-    var focusedInput = $(this).siblings('input');
-    var msg = focusedInput.val();
-    var user = focusedInput.attr('id');
-    focusedInput.val('');
-    // console.log(user, msg);
-    sendMessage(user, msg)
-  });
+  $body.addEventListener('click', function (evt) {
+    if(evt.target && evt.target.nodeName === 'BUTTON'
+      && evt.target.classList.contains('send')) {
+      console.log('send button clicked');
+
+      // Vanilla JS implementation of $.siblings() taken from youmightnotneedjquery.com
+      let $el = evt.target;
+      let siblings = Array.prototype.filter.call($el.parentNode.children, function(child){
+        return child !== $el;
+      });
+      let focusedInput = siblings[0];
+      let msg = focusedInput.value;
+      let user = focusedInput.getAttribute('id');
+      focusedInput.value = '';
+      sendMessage(user, msg)
+    }
+  })
 }
