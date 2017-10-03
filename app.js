@@ -1,8 +1,9 @@
-$(function () {
-  // var chatroom = [];
+window.onload = function () {
+  // console.log('Window is loaded');
   let numberOfUsers = 0;
-  $('.add-new-btn').click(function (e) {
-    // console.log('add-new-btn');
+  let $addNewBtn = document.querySelector('.add-new-btn');
+  // console.log($addNewBtn);
+  $addNewBtn.addEventListener('click', function (e) {
     e.preventDefault();
     let username = "user" + numberOfUsers;
     numberOfUsers++;
@@ -27,15 +28,26 @@ $(function () {
     for (let i = 0; i < numberOfUsers; i++) {
       // console.log(user, `user${i}`);
       if(user === `user${i}`) {
-        $('.chatbox-user' + i).find(".chat").append(`<div class="sent msg">${msg}</div>`);
+        let $chatBox = document.querySelector(`.chatbox-user${i} > .chat`);
+        let $sentMsgEle = document.createElement(`div`);
+        $sentMsgEle.innerHTML = msg;
+        $sentMsgEle.classList.add('sent');
+        $sentMsgEle.classList.add('msg');
+        $chatBox.appendChild($sentMsgEle);
       } else {
-        $('.chatbox-user' + i).find(".chat").append(`<div class="recieved msg">${user}: ${msg}</div>`);
+        let $chatBox = document.querySelector(`.chatbox-user${i} > .chat`);
+        let $sentMsgEle = document.createElement(`div`);
+        $sentMsgEle.innerHTML = `${user}: ${msg}`;
+        $sentMsgEle.classList.add('recieved');
+        $sentMsgEle.classList.add('msg');
+        $chatBox.appendChild($sentMsgEle);
+        // $('.chatbox-user' + i).find(".chat").append(`<div class="recieved msg">${user}: ${msg}</div>`);
       }
       // console.log('sendMessage');
     }
 
   }
-
+  // Event delegation is better with jQuery - Change to Vanilla JS at a later point
   $("body").on("keyup", "input.chat-input", function(event){
     if(event.keyCode == 13){
       var user = this.getAttribute('id');
@@ -53,4 +65,4 @@ $(function () {
     // console.log(user, msg);
     sendMessage(user, msg)
   });
-});
+}
