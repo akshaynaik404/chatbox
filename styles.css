@@ -16,6 +16,7 @@
   border: 1px dotted #999;
   box-shadow: 1px 1px 1px #999;
   position: relative;
+  padding-bottom: 21px;
 }
 .chat {
   overflow-y: scroll;
